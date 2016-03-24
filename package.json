@@ -1,0 +1,22 @@
+{
+  "name": "banner",
+  "version": "1.0.0",
+  "description": "###Small canvas demos and banners for fun",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manoj-nama/canvas-banner.git"
+  },
+  "author": "Manoj Nama",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manoj-nama/canvas-banner/issues"
+  },
+  "homepage": "https://github.com/manoj-nama/canvas-banner#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
