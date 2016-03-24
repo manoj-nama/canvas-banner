@@ -9,10 +9,18 @@
 	<link rel="stylesheet" href="css/common.css">
 </head>
 <body>
+
+	<form>
+		<label for="textVal">Enter some text</label>
+		<input type="text" name="textVal" id="textVal">
+		<button id="redrawBtn">Draw</button>
+	</form>
 	
-	<canvas id="artboard"></canvas>
+	<canvas id="artboard">
+		<strong>Upgrade to a new browser!</strong>
+	</canvas>
 
 	<!-- Include scripts -->
-	<script src="js/main.js"></script>
+	<script src="js/main.js" defer></script>
 </body>
 </html>
