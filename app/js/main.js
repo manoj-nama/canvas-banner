@@ -5,18 +5,61 @@
  * ---------------------------------------------------------------------
  * Parameter description:
  * 1. (text)		: The static text to be displayed on the page
- * 2. (textColor)	: The color of text (default: white, value: Any valid css color)
- * 2. (bgColor1)	: Color 1 for the background gradient (default: green, value: Any valid css color)
- * 3. (bgColor2)	: Color 2 for the background gradient (default: yellow, value: Any valid css color)
- * 4. (bgDir)		: Which direction the background needs to move in (default: cw (clockwise), value: ['cw', 'acw' (anticlockwise)])
+ * 2. (color)		: The color of text (default: black, value: Any valid css color)
+ * 3. (stroke)		: The color of text stroke (default: yellow, value: Any valid css color)
+ * 4. (bgColor1)	: Color 1 for the background gradient (default: green, value: Any valid css color)
+ * 5. (bgColor2)	: Color 2 for the background gradient (default: yellow, value: Any valid css color)
+ * 6. (bgDir)		: Which direction the background needs to move in (default: cw (clockwise), value: ['cw', 'acw' (anticlockwise)])
  * ---------------------------------------------------------------------
  */
 
-(function () {
+function parseUrl() {
+	var params = {};
+
+	params.text = getQueryStringValue("text");
+	params.color = getQueryStringValue("color");
+	params.stroke = getQueryStringValue("stroke");
+	params.bgColor1 = getQueryStringValue("bgColor1");
+	params.bgColor2 = getQueryStringValue("bgColor2");
+	params.bgDir = getQueryStringValue("bgDir");
+
+	return params;
+} 
+
+function getParamsDTO(params) {
+	var defaults = {
+		text: "Please note the perspective property doesn't affect how the element is rendered",
+		color: "black",
+		stroke: "#fc0",
+		bgColor1: "green",
+		bgColor2: "yellow",
+		bgDir: "cw"
+	};
+
+	defaults.text = params.text || defaults.text;
+	defaults.textColor = params.color || defaults.color;
+	defaults.textStroke = params.stroke || defaults.stroke;
+	defaults.bgColor1 = params.bgColor1 || defaults.bgColor1;
+	defaults.bgColor2 = params.bgColor2 || defaults.bgColor2;
+	defaults.bgDir = params.bgDir && ["cw", "acw"].indexOf(params.bgDir.toLowerCase() !== -1) && params.bgDir || defaults.bgDir;
+
+	return defaults;
+}
+
+function getQueryStringValue (key) {
+   return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+}
+
+(function (params) {
 	// Initialize defaults
 	var artBoard = document.getElementById("artboard"),
 		bg = document.getElementById("bg"),
-		text = "Please note the perspective property doesn't affect how the element is rendered",
+		text = params.text,
+		textColor = params.textColor,
+		textStroke = params.textStroke,
+		bgColor1 = params.bgColor1,
+		bgColor2 = params.bgColor2,
+		bgDir = params.bgDir,
 		textArr = text.split(" "),
 		words = [],
 		bgHandler = null,
@@ -45,8 +88,8 @@
 	bgCtx = bg.getContext("2d");
 
 	bgGrad = bgCtx.createRadialGradient(0, 0, 6, 0, 6, 0);  
-	bgGrad.addColorStop(0, "green");
-	bgGrad.addColorStop(0.8, "yellow");
+	bgGrad.addColorStop(0, bgColor1);
+	bgGrad.addColorStop(0.8, bgColor2);
 	bgCtx.fillStyle = bgGrad;
 	ctx.font = fontSize + "px 'Fugaz One'";
 
@@ -69,7 +112,8 @@
 		
 		artboardHandler = requestAnimationFrame(draw);
 		
-		ctx.strokeStyle = "#fc0";
+		ctx.strokeStyle = textStroke;
+		ctx.fillStyle = textColor;
 		ctx.lineWidth = 2;
 		for (idx = 0; idx < words.length; idx++) {
 			o = words[idx];
@@ -77,7 +121,7 @@
 			ctx.fillText(o.val, o.left, top + o.top);
 		}
 		
-		if(top <= -((words.length-1) * (fontSize + 5))) {
+		if(top <= -((words.length-1) * (fontSize + 20))) {
 			clearHandlers();
 		} else {
 			top -= 1;
@@ -95,10 +139,18 @@
 		bgCtx.fill();  
 		bgCtx.restore();
 
-		if(angle >= 360) {
-			angle = 0;
+		if(bgDir === "cw") {
+			angle += 0.05;
+			if(angle >= 360) {
+				angle = 0;
+			}
+		} else {
+			angle -= 0.05;
+			if(angle <= 0) {
+				angle = 360;
+			}
 		}
-		angle += 0.05;
+		
 	}
 
 	//Event Handlers
@@ -141,4 +193,4 @@
 	//Init
 	init();
 
-})();
+})(getParamsDTO(parseUrl()));
