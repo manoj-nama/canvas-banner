@@ -1,5 +1,17 @@
 'use strict';
 
+/*
+ * Text Animation Demo
+ * ---------------------------------------------------------------------
+ * Parameter description:
+ * 1. (text)		: The static text to be displayed on the page
+ * 2. (textColor)	: The color of text (default: white, value: Any valid css color)
+ * 2. (bgColor1)	: Color 1 for the background gradient (default: green, value: Any valid css color)
+ * 3. (bgColor2)	: Color 2 for the background gradient (default: yellow, value: Any valid css color)
+ * 4. (bgDir)		: Which direction the background needs to move in (default: cw (clockwise), value: ['cw', 'acw' (anticlockwise)])
+ * ---------------------------------------------------------------------
+ */
+
 (function () {
 	// Initialize defaults
 	var artBoard = document.getElementById("artboard"),
