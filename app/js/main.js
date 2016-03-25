@@ -16,22 +16,27 @@
 	// Initialize defaults
 	var artBoard = document.getElementById("artboard"),
 		bg = document.getElementById("bg"),
-		redrawBtn = document.getElementById("redrawBtn"),
-		textField = document.getElementById("textVal"),
-		value = "Default value",
+		text = "Please note the perspective property doesn't affect how the element is rendered",
+		textArr = text.split(" "),
+		words = [],
 		bgHandler = null,
 		artboardHandler = null,
 		resizeDebouceTimer = null,
 		bgCtx,
 		bgGrad,
+		lineHeight = 40,
+		fontSize = 40,
 		ctx,
-		angle = 0,
+		idx,
+		metric,		
 		WIDTH = artboard.width,
-		HEIGHT = artboard.height;
+		HEIGHT = artboard.height,
+		top = HEIGHT + 20,
+		angle = 0;
 
 	//Support detection
 	if(!artBoard.getContext) {
-		console.log("Canvas not supported. ABORTING");
+		console.warn("Canvas not supported. ABORTING");
 		return;
 	}
 
@@ -43,15 +48,40 @@
 	bgGrad.addColorStop(0, "green");
 	bgGrad.addColorStop(0.8, "yellow");
 	bgCtx.fillStyle = bgGrad;
+	ctx.font = fontSize + "px 'Fugaz One'";
+
+	//Constructors
+	function Word(val, w, fontSize, idx) {
+		this.val = val;
+		this.width = w;
+		this.left = (WIDTH - w) / 2;
+		this.top = (idx * fontSize) + 20;
+		this.height = fontSize + 20;
+	}
 
 	//Draw methods
 	function draw(hrTime) {
-		ctx.clearRect(0, 0,WIDTH, HEIGHT);
-		ctx.font = "60px Times New Roman";
-		ctx.fillStyle = "Black";
-		ctx.fillText(value, 10, 120);
-
-		console.info("Canvas sized at", WIDTH + "x" + HEIGHT);
+		var idx = 0,
+			o;
+			metric;
+		
+		ctx.clearRect(0, 0, WIDTH, HEIGHT);
+		
+		artboardHandler = requestAnimationFrame(draw);
+		
+		ctx.strokeStyle = "#fc0";
+		ctx.lineWidth = 2;
+		for (idx = 0; idx < words.length; idx++) {
+			o = words[idx];
+			ctx.strokeText(o.val, o.left, top + o.top);
+			ctx.fillText(o.val, o.left, top + o.top);
+		}
+		
+		if(top <= -((words.length-1) * (fontSize + 5))) {
+			clearHandlers();
+		} else {
+			top -= 1;
+		}
 	}
 
 	function drawBg(hrTime) {
@@ -68,7 +98,7 @@
 		if(angle >= 360) {
 			angle = 0;
 		}
-		angle += 0.01;
+		angle += 0.05;
 	}
 
 	//Event Handlers
@@ -83,12 +113,6 @@
 		}, 50);
 	}
 
-	function onRedrawBtnClicked(e) {
-		e.preventDefault();
-		value = textField.value;
-		init();
-	}
-
 	function clearHandlers() {
 		if(artboardHandler) {
 			cancelAnimationFrame(artboardHandler);
@@ -100,12 +124,19 @@
 
 	function init() {
 		clearHandlers();
+		words = [];
+		ctx.font = fontSize + "px 'Fugaz One'";
+		for (idx = 0; idx < textArr.length; idx++) {
+			var txt = textArr[idx] && textArr[idx].toUpperCase() || "";
+			metric = ctx.measureText(txt);
+			words.push(new Word(txt, metric.width, fontSize, idx));
+		}
+		top = HEIGHT + 20;
 		artboardHandler = requestAnimationFrame(draw);
 		bgHandler = requestAnimationFrame(drawBg);
 	}
 
 	window.addEventListener("resize", onWindowResize, false);
-	redrawBtn.addEventListener("click", onRedrawBtnClicked, false);
 
 	//Init
 	init();
