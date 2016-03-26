@@ -23,7 +23,7 @@ canvas {
 }
 
 #artboard {
-  transform: rotateX(60deg) translateY(-90%) scaleY(3.2);
+  transform: rotateX(60deg) translateY(-80%) scaleY(3.2);
 }
 
 form {
