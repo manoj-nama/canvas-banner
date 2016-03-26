@@ -13,6 +13,25 @@
  * ---------------------------------------------------------------------
  */
 
+function loadExternalCSS(url, callback) {
+	var link = document.createElement('link'),
+		img = document.createElement('img');
+
+	link.type = 'text/css';
+	link.rel = 'stylesheet';
+	link.href = url;
+
+	document.getElementsByTagName('head')[0].appendChild(link);
+    
+	img.onerror = function(){
+	   if(callback) callback(link);
+	}
+	img.onload = function() {
+		console.log("Image has loaded");
+	}
+	img.src = url;	
+} 
+
 function parseUrl() {
 	var params = {};
 
@@ -50,7 +69,7 @@ function getQueryStringValue (key) {
    return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
 }
 
-(function (params) {
+function render(params) {
 	// Initialize defaults
 	var artBoard = document.getElementById("artboard"),
 		bg = document.getElementById("bg"),
@@ -91,7 +110,6 @@ function getQueryStringValue (key) {
 	bgGrad.addColorStop(0, bgColor1);
 	bgGrad.addColorStop(0.8, bgColor2);
 	bgCtx.fillStyle = bgGrad;
-	ctx.font = fontSize + "px 'Fugaz One'";
 
 	//Constructors
 	function Word(val, w, fontSize, idx) {
@@ -140,12 +158,12 @@ function getQueryStringValue (key) {
 		bgCtx.restore();
 
 		if(bgDir === "cw") {
-			angle += 0.05;
+			angle += 0.02;
 			if(angle >= 360) {
 				angle = 0;
 			}
 		} else {
-			angle -= 0.05;
+			angle -= 0.02;
 			if(angle <= 0) {
 				angle = 360;
 			}
@@ -156,13 +174,7 @@ function getQueryStringValue (key) {
 	//Event Handlers
 	function onWindowResize(e) {
 		clearTimeout(resizeDebouceTimer);
-		resizeDebouceTimer = setTimeout(function () {
-			artboard.width = window.innerWidth;
-			artboard.height = window.innerHeight;
-			WIDTH = artboard.width,
-			HEIGHT = artboard.height;
-			init();
-		}, 50);
+		resizeDebouceTimer = setTimeout(init, 50);
 	}
 
 	function clearHandlers() {
@@ -175,13 +187,20 @@ function getQueryStringValue (key) {
 	}
 
 	function init() {
+		artboard.width = window.innerWidth;
+		artboard.height = window.innerHeight;
+		WIDTH = artboard.width,
+		HEIGHT = artboard.height;
+
 		clearHandlers();
 		words = [];
 		ctx.font = fontSize + "px 'Fugaz One'";
+
+		//Initialize the words
 		for (idx = 0; idx < textArr.length; idx++) {
 			var txt = textArr[idx] && textArr[idx].toUpperCase() || "";
 			metric = ctx.measureText(txt);
-			words.push(new Word(txt, metric.width, fontSize, idx));
+			words.push(new Word(txt, metric.width, fontSize, idx));	
 		}
 		top = HEIGHT + 20;
 		artboardHandler = requestAnimationFrame(draw);
@@ -192,5 +211,10 @@ function getQueryStringValue (key) {
 
 	//Init
 	init();
+}
 
-})(getParamsDTO(parseUrl()));
+
+//Initialize viewport when the custom font file has loaded
+loadExternalCSS("https://fonts.googleapis.com/css?family=Fugaz+One", function() {
+	render(getParamsDTO(parseUrl()));
+});
