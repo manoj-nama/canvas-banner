@@ -12,43 +12,43 @@
 	<h1>Star Wars Banner</h1>
 
 	<div class="options">
-		<h3>Options</h3>
 		<form>
 			<div class="form-elem">
 				<div class="row">
 					<label for="text">Text: </label>
-					<input type="text" name="text" id="text">
+					<input placeholder="Please note the perspective property doesn't affect how the element is rendered" type="text" name="text" id="text">
 				</div>
 				<div class="row">
 					<label for="color">Text Color: </label>
-					<input type="text" name="color" id="color">
+					<input placeholder="black" type="text" name="color" id="color">
 				</div>
 				<div class="row">
 					<label for="stroke">Stroke Color: </label>
-					<input type="text" name="stroke" id="stroke">
+					<input placeholder="#ffcc00" type="text" name="stroke" id="stroke">
 				</div>
 				<div class="row">
 					<label for="bgColor1">BG Color1: </label>
-					<input type="text" name="bgColor1" id="bgColor1">
+					<input placeholder="green" type="text" name="bgColor1" id="bgColor1">
 				</div>
 				<div class="row">
 					<label for="bgColor2">BG Color2: </label>
-					<input type="text" name="bgColor2" id="bgColor2">
+					<input placeholder="yellow" type="text" name="bgColor2" id="bgColor2">
 				</div>
 				<div class="row">
 					<label for="dir">BG Direction: </label>
-					<input type="text" name="dir" id="dir">
+					<input placeholder="cw/acw" type="text" name="dir" id="dir">
 				</div>
 			</div>
-			<button type="submit">Update</button>
+			<button type="submit" id="submitBtn">Update</button>
 		</form>
 	</div>
 
-	<div class="final-url">
-		http://localhost:3000/banner.html
+	<div class="final-url" id="finalUrl">
+		
 	</div>
 
-	<iframe src="/" frameborder="0" width="300" height="250"></iframe>
+	<iframe id="banner-frame" src="/" frameborder="0" width="300" height="250"></iframe>
 
+	<script src="js/main.js"></script>
 </body>
 </html>

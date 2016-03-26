@@ -50,6 +50,11 @@ iframe {
 .options .form-elem input {
 	font-size: 1em;
 	padding: 5px;
+	outline: none;
+	border: 1px solid #ddd;
+}
+.options .form-elem input:focus {
+	border: 1px solid #07f;
 }
 .options button {
 	padding: 10px 20px;
@@ -58,6 +63,7 @@ iframe {
 	cursor: pointer;
 	margin: 0 auto;
 	border: 0;
+	outline: none;
 	border-radius: 3px;
 	font-size: 1.1em;
 }
