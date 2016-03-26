@@ -27,7 +27,7 @@ function loadExternalCSS(url, callback) {
 	   if(callback) callback(link);
 	}
 	img.onload = function() {
-		console.log("Image has loaded");
+		// console.log("Image has loaded");
 	}
 	img.src = url;	
 } 
@@ -102,7 +102,7 @@ function render(params) {
 		return;
 	}
 
-	console.info("Browser supports Canvas API");
+	// console.info("Browser supports Canvas API");
 	ctx = artBoard.getContext("2d");
 	bgCtx = bg.getContext("2d");
 
