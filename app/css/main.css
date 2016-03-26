@@ -1,0 +1,78 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font-family: 'Raleway',sans-serif;
+	text-align: center;
+	color: #333;
+	min-height: 800px;
+}
+h1 {
+	padding: 10px 0;
+	font-weight: normal;
+	text-align: center;
+}
+
+iframe {
+	margin: 0 auto;
+	border: 1px solid #ddd;
+}
+
+.options, .final-url {
+	margin: 10px;
+	padding: 10px;
+}
+
+.options {
+	border-bottom: 1px solid #eee;
+	border-top: 1px solid #eee;
+	text-align: left;	
+}
+
+.options form {
+	text-align: center;
+}
+.options .form-elem {
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+.options .form-elem .row {
+	display: block;
+	float: left;
+	margin: 2px 0;
+}
+.options .form-elem label {
+	min-width: 140px;
+	text-align: right;
+	display: inline-block;
+}
+.options .form-elem input {
+	font-size: 1em;
+	padding: 5px;
+}
+.options button {
+	padding: 10px 20px;
+	display: inline-block;
+	background-color: #eee;
+	cursor: pointer;
+	margin: 0 auto;
+	border: 0;
+	border-radius: 3px;
+	font-size: 1.1em;
+}
+.options button:hover {
+	background-color: #aaa;
+}
+
+.options h3 {
+	padding: 10px 0;
+}
+
+.final-url {
+	background-color: #f8f8f8;
+	border: 2px dashed #ddd;
+	font-family: monospace;
+	color: #333;
+	text-align: center;
+}

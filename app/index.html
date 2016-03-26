@@ -2,21 +2,53 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Canvas demo</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Banner tester</title>
 
-	<!-- Include stylesheets -->
-	<link rel="stylesheet" href="css/common.css">
+	<link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-	<div class="canvas-holder">
-		<canvas id="bg" width="6" height="6"></canvas>
-		<canvas id="artboard">
-			<strong>Upgrade to a new browser!</strong>
-		</canvas>
+	
+	<h1>Star Wars Banner</h1>
+
+	<div class="options">
+		<h3>Options</h3>
+		<form>
+			<div class="form-elem">
+				<div class="row">
+					<label for="text">Text: </label>
+					<input type="text" name="text" id="text">
+				</div>
+				<div class="row">
+					<label for="color">Text Color: </label>
+					<input type="text" name="color" id="color">
+				</div>
+				<div class="row">
+					<label for="stroke">Stroke Color: </label>
+					<input type="text" name="stroke" id="stroke">
+				</div>
+				<div class="row">
+					<label for="bgColor1">BG Color1: </label>
+					<input type="text" name="bgColor1" id="bgColor1">
+				</div>
+				<div class="row">
+					<label for="bgColor2">BG Color2: </label>
+					<input type="text" name="bgColor2" id="bgColor2">
+				</div>
+				<div class="row">
+					<label for="dir">BG Direction: </label>
+					<input type="text" name="dir" id="dir">
+				</div>
+			</div>
+			<button type="submit">Update</button>
+		</form>
 	</div>
 
-	<!-- Include scripts -->
-	<script src="js/main.js" defer></script>
+	<div class="final-url">
+		http://localhost:3000/banner.html
+	</div>
+
+	<iframe src="/" frameborder="0" width="300" height="250"></iframe>
+
 </body>
 </html>
