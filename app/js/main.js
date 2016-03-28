@@ -48,7 +48,7 @@
 		e && e.preventDefault();
 
 		url = prepareUrl();
-		finalUrl.innerText = url;
+		finalUrl.innerHTML = url;
 		bannerFrame.src = url;
 	}
 
